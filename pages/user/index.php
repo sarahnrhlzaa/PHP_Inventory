@@ -8,7 +8,7 @@ if($_SESSION['role'] !== 'ADMIN') {
 $users = callAPI('GET', '/users');
 ?>
 <div class="card">
-    <div style="display:flex; justify-content:space-between;">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
         <h3>Management User (Admin Area)</h3>
         <a href="add.php" class="btn btn-primary">+ Add Staff</a>
     </div>
@@ -17,10 +17,17 @@ $users = callAPI('GET', '/users');
         <tbody>
             <?php if(isset($users['data'])): foreach($users['data'] as $u): ?>
             <tr>
-                <td><?= $u['id'] ?></td>
-                <td><?= $u['name'] ?></td>
+                <td style="color: #333;"><?= $u['id'] ?></td>
+
+                <td style="font-weight: bold;"><?= $u['name'] ?></td>
                 <td><?= $u['email'] ?></td>
-                <td><span class="badge-role"><?= $u['role'] ?></span></td>
+                <td>
+                    <?php if($u['role'] === 'ADMIN'): ?>
+                        <span class="badge-role bg-danger">ADMIN</span>
+                    <?php else: ?>
+                        <span class="badge-role bg-primary">PETUGAS</span>
+                    <?php endif; ?>
+                </td>
             </tr>
             <?php endforeach; endif; ?>
         </tbody>

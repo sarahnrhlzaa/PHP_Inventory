@@ -2,7 +2,7 @@
 $logs = callAPI('GET', '/condition-logs');
 ?>
 <div class="card">
-    <div style="display:flex; justify-content:space-between;">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
         <h3>Condition Log (Quality Control)</h3>
         <a href="add.php" class="btn btn-danger">+ Report Damage</a>
     </div>

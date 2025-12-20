@@ -5,7 +5,7 @@ $students = callAPI('GET', '/students');
 ?>
 
 <div class="card">
-    <div style="display:flex; justify-content:space-between; margin-bottom: 20px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
         <h3>Student List</h3>
         <a href="add.php" class="btn btn-primary">+ Add Student</a>
     </div>

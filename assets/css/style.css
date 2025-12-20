@@ -1,144 +1,203 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* PALET WARNA BARU */
+    --primary-color: #4361ee;    /* Biru Utama */
+    --success-color: #2ec4b6;    /* Hijau Tosca */
+    --warning-color: #ff9f1c;    /* Oranye */
+    --danger-color: #e63946;     /* Merah */
+    --dark-color: #1d3557;       /* Navy Sidebar */
+    --light-bg: #f8f9fa;         /* Background Abu Terang */
+    --white: #ffffff;
+    --text-dark: #333333;
+}
 
 body { 
     font-family: 'Poppins', sans-serif; 
-    background: #f4f7fa;
+    background: var(--light-bg);
     margin: 0; 
+    color: var(--text-dark);
 }
 
 a { 
     text-decoration: none; 
     color: inherit; 
+    transition: 0.3s; 
 }
 
-/* Layout */
+/* LAYOUT FLEXBOX */
 .wrapper { 
     display: flex; 
     width: 100%; 
     align-items: stretch; 
+    overflow-x: hidden; /* Mencegah scroll samping */
 }
 
+/* SIDEBAR */
 #sidebar { 
-    min-width: 250px; 
-    max-width: 250px; 
-    background: #2c3e50; 
+    min-width: 260px; 
+    max-width: 260px; 
+    background: var(--dark-color); 
     color: #fff; 
     min-height: 100vh; 
-    transition: all 0.3s; 
+    transition: all 0.3s;
+    box-shadow: 4px 0 10px rgba(0,0,0,0.1);
 }
 
-#sidebar.active { 
-    margin-left: -250px; 
+/* KELAS ACTIVE (UNTUK TOGGLE HIDE/SHOW) */
+#sidebar.active {
+    margin-left: -260px; /* Menyembunyikan sidebar ke kiri */
 }
 
 .sidebar-header { 
-    padding: 20px; 
-    background: #1a252f; 
+    padding: 25px 20px; 
+    background: rgba(0,0,0,0.2); 
+    border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
 #sidebar ul.components { 
-    padding: 20px 0; 
-    border-bottom: 1px solid #47748b; 
+    padding: 10px 0; 
 }
 
 #sidebar ul li a { 
-    padding: 15px; 
-    font-size: 1.1em; 
+    padding: 12px 20px; 
+    font-size: 0.95rem; 
     display: block; 
-    color: #bdc3c7; 
+    color: #a8b2d1; 
+    border-left: 4px solid transparent;
 }
 
 #sidebar ul li a:hover { 
-    color: #fff; 
-    background: #34495e; 
+    color: var(--white); 
+    background: rgba(255,255,255,0.05);
+    border-left-color: var(--primary-color);
 }
 
+/* KONTEN UTAMA */
 #content { 
     width: 100%; 
     min-height: 100vh; 
     transition: all 0.3s; 
+    display: flex;
+    flex-direction: column;
 }
 
+/* NAVBAR */
 .navbar { 
-    padding: 15px; 
-    background: #fff; 
-    border-bottom: 1px solid #ddd; 
+    padding: 15px 30px; 
+    background: var(--white); 
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05); 
     display: flex; 
     align-items: center; 
+    justify-content: space-between;
 }
 
 .main-content { 
-    padding: 20px; 
+    padding: 30px; 
+    flex: 1; 
 }
 
-/* Components */
+/* KOMPONEN UI LAINNYA */
 .card { 
-    background: #fff; 
-    padding: 20px; 
-    border-radius: 8px; 
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
-    margin-bottom: 20px; 
+    background: var(--white); 
+    padding: 25px; 
+    border-radius: 12px; 
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03); 
+    border: 1px solid #e2e8f0;
+    margin-bottom: 20px;
 }
 
 .btn { 
-    padding: 8px 15px; 
+    padding: 8px 16px; 
     border: none; 
-    border-radius: 4px; 
+    border-radius: 6px; 
     cursor: pointer; 
-    display: inline-block; 
-    color:white;
+    display: inline-flex; 
+    align-items: center; 
+    gap: 8px; 
+    color: white; 
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+.btn:hover { 
+    opacity: 0.9; 
+    transform: translateY(-1px);
 }
 
 .btn-primary { 
-    background: #3498db; 
+    background: var(--primary-color); 
 }
 
 .btn-success { 
-    background: #2ecc71; 
+    background: var(--success-color); 
 }
 
 .btn-danger { 
-    background: #e74c3c; 
+    background: var(--danger-color); 
 }
 
 .btn-info { 
-    background: #f1c40f; 
-    color: #333; 
+    background: var(--warning-color); 
+    color: white; 
+}
+
+.form-control { 
+    width: 100%; padding: 10px; 
+    border: 1px solid #cbd5e1; border-radius: 6px; 
 }
 
 table { 
     width: 100%; 
-    border-collapse: collapse; 
+    border-collapse: separate; 
+    border-spacing: 0; 
     margin-top: 15px; 
 }
 
-table th, table td { 
-    padding: 12px; 
-    border-bottom: 1px solid #eee; 
-    text-align: left; 
-}
-
 table th { 
-    background-color: #f8f9fa; 
+    background: #f8fafc; 
+    padding: 15px; 
+    text-align: left; 
+    border-bottom: 2px solid #e2e8f0; 
 }
 
-.form-group { 
-    margin-bottom: 15px;
+table td { 
+    padding: 15px; 
+    border-bottom: 1px solid #f1f5f9; 
 }
 
-.form-control { 
-    width: 100%; 
-    padding: 10px; 
-    border: 1px solid #ddd; 
-    border-radius: 4px; 
-    box-sizing: border-box; 
+/* Responsive Mobile */
+@media (max-width: 768px) {
+    #sidebar { 
+        margin-left: -260px; 
+    }
+    #sidebar.active { 
+        margin-left: 0; 
+    }
 }
 
-.badge-role { 
-    background: #f1c40f; 
-    color: #333; 
-    padding: 2px 6px; 
-    border-radius: 4px; 
-    font-size: 0.8em; 
-    font-weight: bold;
+/* --- UNIVERSAL BADGE STYLE (Sidebar & Tabel) --- */
+/* Class ini dipakai untuk .badge-role (Sidebar) dan .badge-status (Tabel) */
+.badge-role, .badge-status {
+    display: inline-block;      /* Supaya padding & width berfungsi */
+    padding: 6px 16px;          /* Jarak dalam: Atas-Bawah 6px, Kiri-Kanan 16px */
+    font-size: 0.75rem;         /* Ukuran font kecil tapi terbaca */
+    font-weight: 600;           /* Huruf tebal */
+    line-height: 1;             /* Jarak antar baris rapat */
+    color: #fff;                /* Teks putih */
+    text-align: center;
+    white-space: nowrap;        /* Teks dilarang turun baris */
+    vertical-align: middle;     /* Rata tengah vertikal */
+    
+    border-radius: 50px;        /* KUNCI: Membuat sudut bulat sempurna (Pill Shape) */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15); /* Bayangan halus biar timbul */
+    letter-spacing: 0.5px;      /* Spasi antar huruf biar elegan */
+    
+    min-width: 70px;            /* Lebar minimal biar seragam */
+    margin-top: 5px;            /* Jarak sedikit dari elemen atasnya */
 }
+
+/* Warna-warni Badge Helper */
+.bg-success { background-color: var(--success-color) !important; } /* Hijau */
+.bg-danger  { background-color: var(--danger-color) !important; }  /* Merah */
+.bg-warning { background-color: var(--warning-color) !important; } /* Oranye */
+.bg-primary { background-color: var(--primary-color) !important; } /* Biru */

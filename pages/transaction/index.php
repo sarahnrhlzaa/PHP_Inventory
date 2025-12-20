@@ -2,7 +2,7 @@
 $trx = callAPI('GET', '/transactions');
 ?>
 <div class="card">
-    <div style="display:flex; justify-content:space-between;">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
         <h3>Transaction History</h3>
         <a href="add.php" class="btn btn-primary">+ New Transaction</a>
     </div>
