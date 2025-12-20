@@ -1,95 +1,62 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) session_start();
+
+// Cek Login
+if (!isset($_SESSION['user_id'])) {
+    header("Location: /PHP_Inventory/login.php");
+    exit;
+}
+
+require_once __DIR__ . '/api_helper.php';
+$base_url = "/PHP_Inventory"; // Sesuaikan dengan nama folder di htdocs
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <style>
-        .sidebar {
-            min-height: 100vh;
-            background-color: #212529;
-        }
-        .sidebar .nav-link {
-            color: #adb5bd;
-            padding: 0.75rem 1rem;
-        }
-        .sidebar .nav-link:hover,
-        .sidebar .nav-link.active {
-            color: #fff;
-            background-color: #495057;
-        }
-        .sidebar .nav-link i {
-            margin-right: 0.5rem;
-        }
-    </style>
+    <title>Lab Inventory</title>
+    <link rel="stylesheet" href="<?= $base_url ?>/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/inventory-frontend/">
-                <i class="bi bi-box-seam"></i> Inventory Lab
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <span class="navbar-text text-light">
-                            <i class="bi bi-person-circle"></i> Admin
-                        </span>
-                    </li>
-                </ul>
+    <div class="wrapper">
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Inventory Laboratorium System</h3>
+                <small>Universitas Indonesia</small><br>
+                    <?php if ($_SESSION['role'] === 'ADMIN'): ?>
+                        <span class="badge-role"><?= $_SESSION['role'] ?></span>
+                    <?php else: ?>
+                        <span class="badge-role" style="background: #DCDCDC; color: black;"><?= $_SESSION['role'] ?></span>
+                    <?php endif; ?>
             </div>
-        </div>
-    </nav>
+            <ul class="list-unstyled components">
+                <li><a href="<?= $base_url ?>/pages/dashboard.php"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="<?= $base_url ?>/pages/transaction/index.php"><i class="fas fa-exchange-alt"></i> Transaction</a></li>
+                <li><a href="<?= $base_url ?>/pages/equipment/index.php"><i class="fas fa-microscope"></i> Equipment</a></li>
+                <li><a href="<?= $base_url ?>/pages/condition_log/index.php"><i class="fas fa-file-medical-alt"></i> Condition Log</a></li>
+                <li><a href="<?= $base_url ?>/pages/student/index.php"><i class="fas fa-user-graduate"></i> Student</a></li>
+                <li><a href="<?= $base_url ?>/pages/category/index.php"><i class="fas fa-tags"></i> Category</a></li>
 
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <nav class="col-md-2 d-md-block sidebar">
-                <div class="position-sticky pt-3">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/inventory-frontend/index.php">
-                                <i class="bi bi-speedometer2"></i> Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/inventory-frontend/pages/students/index.php">
-                                <i class="bi bi-people"></i> Mahasiswa
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/inventory-frontend/pages/equipment/index.php">
-                                <i class="bi bi-box"></i> Alat Laboratorium
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/inventory-frontend/pages/categories/index.php">
-                                <i class="bi bi-tags"></i> Kategori
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/inventory-frontend/pages/transactions/index.php">
-                                <i class="bi bi-arrow-left-right"></i> Transaksi
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/inventory-frontend/pages/transactions/borrowing.php">
-                                <i class="bi bi-box-arrow-right"></i> Peminjaman Aktif
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/inventory-frontend/pages/users/index.php">
-                                <i class="bi bi-person-gear"></i> User
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <?php if($_SESSION['role'] === 'ADMIN'): ?>
+                <li>
+                    <a href="<?= $base_url ?>/pages/user/index.php" style="background: #c0392b;">
+                        <i class="fas fa-users-cog"></i> User Management
+                    </a>
+                </li>
+                <?php endif; ?>
+
+                <li><a href="<?= $base_url ?>/logout.php" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <div id="content">
+            <nav class="navbar">
+                <button type="button" id="sidebarCollapse" class="btn btn-info">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <span class="page-title">Inventory System</span>
             </nav>
-
-            <!-- Main content -->
-            <main class="col-md-10 ms-sm-auto px-md-4">
+            <div class="main-content">
+            
